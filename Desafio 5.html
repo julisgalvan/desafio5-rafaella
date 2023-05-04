@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de Compras</title>
+    <img class="body" src="mercado.jpeg">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        position: relative;
+        background-image: url('Desktop/DESAFIO RAFAELLA BALLERINI/mercado.jpeg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lista de Compras</h1>
+      <form>
+        <div class="form-group">
+          <label for="nomeItem">Nome do Item:</label>
+          <input type="text" class="form-control" id="nomeItem" />
+        </div>
+        <div class="form-group">
+          <label for="categoria">Categoria:</label>
+          <select class="form-control" id="categoria">
+            <option value="frutas">Frutas</option>
+            <option value="laticinios">Laticínios</option>
+            <option value="congelados">Congelados</option>
+            <option value="doces">Doces</option>
+            <option value="graos">Grãos</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="adicionarItem()">
+          Adicionar Item
+        </button>
+      </form>
+      <hr />
+      <h2>Lista de Compras:</h2>
+      <ul id="listaCompras"></ul>
+    </div>
+    <script>
+      const lista = [];
+
+      function adicionarItem() {
+        const nomeItem = document.getElementById("nomeItem").value;
+        const categoria = document.getElementById("categoria").value;
+
+        lista.push({ nome: nomeItem, categoria });
+
+        exibirListaCompras();
+      }
+
+      function exibirListaCompras() {
+        const listaCompras = document.getElementById("listaCompras");
+        listaCompras.innerHTML = "";
+
+        const categorias = {
+          frutas: [],
+          laticinios: [],
+          congelados: [],
+          doces: [],
+          graos: [],
+        };
+
+        lista.forEach((item) => {
+          categorias[item.categoria].push(item.nome);
+        });
+
+        for (const categoria in categorias) {
+          if (categorias[categoria].length > 0) {
+            const listaCategoria = document.createElement("li");
+            listaCategoria.innerHTML = `<strong>${categoria}</strong>: ${categorias[categoria].join(
+              ", "
+            )}`;
+            listaCompras.appendChild(listaCategoria);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
